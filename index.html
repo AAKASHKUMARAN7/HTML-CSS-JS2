@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback - Online Class</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c") no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      width: 500px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+      
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    textarea {
+      resize: none;
+      height: 70px;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      display: none;
+    }
+    /* Success Page Styling */
+    .success-page {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url("https://images.unsplash.com/photo-1503264116251-35a269479413") no-repeat center center/cover;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6); /* dark overlay */
+      z-index: 1;
+    }
+    .success-content {
+      position: relative;
+      z-index: 2;
+      color: #FFD700; /* golden slogan */
+      text-shadow: 2px 2px 8px black;
+    }
+    .success-content h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .success-content h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+    .success-content img {
+      width: 200px;
+      margin-top: 15px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Feedback Form -->
+  <div class="container" id="formContainer">
+    <h2>Feedback - Online Class</h2>
+    <form id="feedbackForm" onsubmit="return validateForm()">
+      
+      <div class="form-group">
+        <label for="name">Student Name *</label>
+        <input type="text" id="name">
+        <div id="nameError" class="error">Please enter your name</div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="text" id="email">
+        <div id="emailError" class="error">Please enter a valid email</div>
+      </div>
+
+      <div class="form-group">
+        <label for="staff">Select Staff *</label>
+        <select id="staff">
+          <option value="">--Select--</option>
+          <option>Mr. Thamarai San</option>
+          <option>Ms. Uma San</option>
+          <option>Ms. Roohi San</option>
+          <option>Mr. Nadimuthu San</option>
+          <option>Mr. Sudhakar San</option>
+        </select>
+        <div id="staffError" class="error">Please select staff</div>
+      </div>
+
+      <div class="form-group">
+        <label for="rating">How was today’s class? *</label>
+        <select id="rating">
+          <option value="">--Select--</option>
+          <option>Excellent</option>
+          <option>Good</option>
+          <option>Average</option>
+          <option>Poor</option>
+        </select>
+        <div id="ratingError" class="error">Please select a rating</div>
+      </div>
+
+      <div class="form-group">
+        <label for="learning">Your Learning *</label>
+        <textarea id="learning"></textarea>
+        <div id="learningError" class="error">Please enter your learning</div>
+      </div>
+
+      <div class="form-group">
+        <label for="motd">How was the Message of the Day? *</label>
+        <select id="motd">
+          <option value="">--Select--</option>
+          <option>Inspiring</option>
+          <option>Motivating</option>
+          <option>Informative</option>
+          <option>Not Clear</option>
+        </select>
+        <div id="motdError" class="error">Please select an option</div>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Success Screen -->
+  <div class="success-page" id="successPage">
+    <div class="overlay"></div>
+    <div class="success-content">
+      <h1>Feedback Submitted Successfully</h1>
+      <h2>Enjoy Life, Enjoy Programming</h2>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDNw3jGKNAny1_f8Lr7r0yBVsEsjiFQ8jUkA&s" alt="Programming Image">
+    </div>
+  </div>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      let name = document.getElementById("name").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let staff = document.getElementById("staff").value;
+      let rating = document.getElementById("rating").value;
+      let learning = document.getElementById("learning").value.trim();
+      let motd = document.getElementById("motd").value;
+
+      // Name
+      if (name === "") { document.getElementById("nameError").style.display="block"; isValid=false; }
+      else { document.getElementById("nameError").style.display="none"; }
+
+      // Email
+      let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.match(emailPattern)) { document.getElementById("emailError").style.display="block"; isValid=false; }
+      else { document.getElementById("emailError").style.display="none"; }
+
+      // Staff
+      if (staff === "") { document.getElementById("staffError").style.display="block"; isValid=false; }
+      else { document.getElementById("staffError").style.display="none"; }
+
+      // Rating
+      if (rating === "") { document.getElementById("ratingError").style.display="block"; isValid=false; }
+      else { document.getElementById("ratingError").style.display="none"; }
+
+      // Learning
+      if (learning === "") { document.getElementById("learningError").style.display="block"; isValid=false; }
+      else { document.getElementById("learningError").style.display="none"; }
+
+      // MOTD
+      if (motd === "") { document.getElementById("motdError").style.display="block"; isValid=false; }
+      else { document.getElementById("motdError").style.display="none"; }
+
+      if (isValid) {
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("successPage").style.display = "flex"; // show success
+      }
+      return false; // prevent actual form submit
+    }
+  </script>
+</body>
+</html>
